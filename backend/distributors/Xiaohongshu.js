@@ -10,7 +10,7 @@
 const { BaseDistributor, PlatformType, DistributeStatus, AuthType } = require('./BaseDistributor');
 const path = require('path');
 const fs = require('fs');
-const logger = require('../../utils/logger');
+const logger = require('../src/utils/logger');
 
 class XiaohongshuDistributor extends BaseDistributor {
   constructor(config = {}) {

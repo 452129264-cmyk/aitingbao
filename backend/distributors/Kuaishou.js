@@ -3,8 +3,8 @@
  */
 
 const { BaseDistributor, PlatformType, DistributeStatus, AuthType } = require('./BaseDistributor');
-const BrowserAutomation = require('./BrowserAutomation');
-const logger = require('../../utils/logger');
+// const BrowserAutomation = require('./BrowserAutomation'); // TODO: implement
+const logger = require('../src/utils/logger');
 
 class KuaishouDistributor extends BaseDistributor {
   constructor(config = {}) {

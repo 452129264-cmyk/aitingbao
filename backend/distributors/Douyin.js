@@ -10,8 +10,8 @@
  */
 
 const { BaseDistributor, PlatformType, DistributeStatus, AuthType } = require('./BaseDistributor');
-const BrowserAutomation = require('./BrowserAutomation');
-const logger = require('../../utils/logger');
+// const BrowserAutomation = require('./BrowserAutomation'); // TODO: implement
+const logger = require('../src/utils/logger');
 
 class DouyinDistributor extends BaseDistributor {
   constructor(config = {}) {

@@ -3,7 +3,7 @@
  * 所有平台分发器必须继承此类
  */
 
-const logger = require('../../utils/logger');
+const logger = require('../src/utils/logger');
 
 /**
  * 平台类型枚举

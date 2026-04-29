@@ -13,7 +13,7 @@ const { BaseDistributor, PlatformType, DistributeStatus, AuthType } = require('.
 const crypto = require('crypto');
 const axios = require('axios');
 const FormData = require('form-data');
-const logger = require('../../utils/logger');
+const logger = require('../src/utils/logger');
 
 class NetEaseCloudDistributor extends BaseDistributor {
   constructor(config = {}) {

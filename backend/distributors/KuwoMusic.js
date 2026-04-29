@@ -4,8 +4,8 @@
 
 const { BaseDistributor, PlatformType, DistributeStatus, AuthType } = require('./BaseDistributor');
 const QQMusicDistributor = require('./QQMusic');
-const BrowserAutomation = require('./BrowserAutomation');
-const logger = require('../../utils/logger');
+// const BrowserAutomation = require('./BrowserAutomation'); // TODO: implement
+const logger = require('../src/utils/logger');
 
 class KuwoMusicDistributor extends BaseDistributor {
   constructor(config = {}) {

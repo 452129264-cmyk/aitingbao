@@ -12,7 +12,7 @@
 const { BaseDistributor, PlatformType, DistributeStatus, AuthType } = require('./BaseDistributor');
 const axios = require('axios');
 const FormData = require('form-data');
-const logger = require('../../utils/logger');
+const logger = require('../src/utils/logger');
 
 class QQMusicDistributor extends BaseDistributor {
   constructor(config = {}) {
