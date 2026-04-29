@@ -23,7 +23,7 @@ const qualityInspector = new AudioQualityInspector();
 const audioMixer = new AudioMixer();
 const hookFinder = new HookFinder();
 const copyrightFilter = new CopyrightFilter();
-const stylePromptEngine = new StylePromptEngine();
+const _SPE = require("../services/StylePromptEngine"); const stylePromptEngine = (typeof _SPE === "function") ? new _SPE() : _SPE;
 
 // ==================== 质检接口 ====================
 
