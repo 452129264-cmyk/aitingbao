@@ -1,0 +1,38 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/generate/generate",
+    "pages/myworks/myworks",
+    "pages/distribute/distribute"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1a1a2e",
+    "navigationBarTitleText": "AI写歌",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#1a1a2e"
+  },
+  "tabBar": {
+    "color": "#999",
+    "selectedColor": "#ff6b9d",
+    "backgroundColor": "#1a1a2e",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "创作",
+        "iconPath": "images/tab_create.png",
+        "selectedIconPath": "images/tab_create_active.png"
+      },
+      {
+        "pagePath": "pages/myworks/myworks",
+        "text": "我的作品",
+        "iconPath": "images/tab_music.png",
+        "selectedIconPath": "images/tab_music_active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

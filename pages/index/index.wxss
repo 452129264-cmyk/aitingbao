@@ -1,0 +1,35 @@
+.header {
+  text-align: center;
+  padding: 40rpx 0;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16rpx;
+}
+
+.logo-icon {
+  font-size: 60rpx;
+  margin-right: 16rpx;
+}
+
+.logo-text {
+  font-size: 48rpx;
+  font-weight: bold;
+  background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-subtitle {
+  font-size: 28rpx;
+  color: #999;
+}
+
+.footer {
+  text-align: center;
+  padding: 40rpx 0;
+}

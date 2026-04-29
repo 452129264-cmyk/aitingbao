@@ -1,0 +1,107 @@
+<view class="container">
+  <!-- 顶部标题 -->
+  <view class="header">
+    <view class="logo-area">
+      <text class="logo-icon">🎵</text>
+      <text class="logo-text">AI写歌</text>
+    </view>
+    <text class="header-subtitle">一句话，创作你的专属歌曲</text>
+  </view>
+
+  <!-- 输入区域 -->
+  <view class="card">
+    <view class="title">创作灵感</view>
+    <view class="subtitle mb-20">描述你的故事、情感或想要的歌词</view>
+    
+    <input 
+      class="input-field"
+      type="textarea"
+      placeholder="例如：我怀念校园时光，阳光下的操场，青涩的爱情..."
+      value="{{prompt}}"
+      bindinput="onPromptInput"
+      maxlength="200"
+    />
+    <text class="text-small text-gray">{{prompt.length || 0}}/200</text>
+  </view>
+
+  <!-- 曲风选择 -->
+  <view class="card">
+    <view class="title">选择曲风</view>
+    <view class="select-group">
+      <view 
+        class="select-btn {{styleIndex === 0 ? 'active' : ''}}"
+        bindtap="onStyleSelect"
+        data-index="0"
+      >
+        😢 伤感
+      </view>
+      <view 
+        class="select-btn {{styleIndex === 1 ? 'active' : ''}}"
+        bindtap="onStyleSelect"
+        data-index="1"
+      >
+        🧠 洗脑
+      </view>
+      <view 
+        class="select-btn {{styleIndex === 2 ? 'active' : ''}}"
+        bindtap="onStyleSelect"
+        data-index="2"
+      >
+        🏯 古风
+      </view>
+    </view>
+  </view>
+
+  <!-- 声音设置 -->
+  <view class="card">
+    <view class="title">声音设置</view>
+    <view class="switch-row">
+      <text class="switch-label">🎤 人声演唱</text>
+      <switch 
+        checked="{{hasVocal}}"
+        bindchange="onVocalChange"
+        color="#ff6b9d"
+      />
+    </view>
+    <view class="flex-between mt-20">
+      <text class="switch-label">性别</text>
+      <view class="select-group" style="gap: 10rpx;">
+        <view 
+          class="select-btn {{vocalGender === 'm' ? 'active' : ''}}"
+          bindtap="onGenderSelect"
+          data-gender="m"
+          style="min-width: 100rpx; padding: 16rpx 30rpx;"
+        >
+          男声
+        </view>
+        <view 
+          class="select-btn {{vocalGender === 'f' ? 'active' : ''}}"
+          bindtap="onGenderSelect"
+          data-gender="f"
+          style="min-width: 100rpx; padding: 16rpx 30rpx;"
+        >
+          女声
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 提示信息 -->
+  <view class="tip">
+    <text>⚠️ AI生成内容仅供参考学习，请勿用于商业用途</text>
+  </view>
+
+  <!-- 生成按钮 -->
+  <button 
+    class="btn-primary btn-block"
+    bindtap="onGenerate"
+    disabled="{{!prompt || generating}}"
+  >
+    {{generating ? '🎵 创作中...' : '🚀 开始创作'}}
+  </button>
+
+  <!-- 底部说明 -->
+  <view class="footer">
+    <text class="text-small text-gray">由 Suno AI 提供技术支持</text>
+  </view>
+</view>

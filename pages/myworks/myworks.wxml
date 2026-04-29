@@ -1,0 +1,102 @@
+<view class="container">
+  <!-- 标题 -->
+  <view class="header">
+    <text class="title">我的作品</text>
+    <text class="subtitle">共 {{musicList.length}} 首歌曲</text>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{musicList.length === 0}}">
+    <text class="empty-icon">🎵</text>
+    <view class="empty-text">还没有创作任何歌曲</view>
+    <view class="empty-sub">去首页开始你的创作吧</view>
+    <button class="btn-primary mt-30" bindtap="onGoCreate">开始创作</button>
+  </view>
+
+  <!-- 歌曲列表 -->
+  <view class="music-list" wx:else>
+    <view 
+      class="music-card"
+      wx:for="{{musicList}}"
+      wx:key="id"
+    >
+      <view class="music-cover">
+        <text>{{item.style === '古风' ? '🏯' : item.style === '伤感' ? '😢' : '🎵'}}</text>
+      </view>
+      
+      <view class="music-info" bindtap="onPlayMusic" data-id="{{item.id}}">
+        <view class="music-title">{{item.title}}</view>
+        <view class="music-meta">
+          <text class="tag {{item.style === '古风' ? 'tag-purple' : item.style === '伤感' ? '' : 'tag-green'}}">{{item.style}}</text>
+          <text>{{item.vocalGender}}</text>
+          <text class="ml-20">{{item.createTime}}</text>
+        </view>
+      </view>
+
+      <view class="music-actions">
+        <view 
+          class="action-btn {{playingId === item.id && playing ? 'playing' : ''}}"
+          bindtap="onPlayMusic"
+          data-id="{{item.id}}"
+        >
+          {{playingId === item.id && playing ? '⏸' : '▶️'}}
+        </view>
+        <view class="action-btn" bindtap="onShowMenu" data-id="{{item.id}}">
+          ⋮
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作菜单 -->
+  <view class="action-sheet" wx:if="{{showMenu}}" bindtap="onHideMenu">
+    <view class="action-sheet-content" catchtap="preventBubble">
+      <view class="action-sheet-title">{{currentMusic?.title || '歌曲操作'}}</view>
+      
+      <view class="action-sheet-item" bindtap="onRename">
+        <text class="action-icon">✏️</text>
+        <text>重命名</text>
+      </view>
+      
+      <view class="action-sheet-item" bindtap="onDownload">
+        <text class="action-icon">⬇️</text>
+        <text>下载音频</text>
+      </view>
+      
+      <view class="action-sheet-item" bindtap="onShare">
+        <text class="action-icon">📤</text>
+        <text>分享</text>
+      </view>
+      
+      <view class="action-sheet-item danger" bindtap="onDelete">
+        <text class="action-icon">🗑️</text>
+        <text>删除</text>
+      </view>
+      
+      <view class="action-sheet-cancel" bindtap="onHideMenu">取消</view>
+    </view>
+  </view>
+
+  <!-- 重命名弹窗 -->
+  <view class="modal" wx:if="{{showRenameModal}}" bindtap="onCancelRename">
+    <view class="modal-content" catchtap="preventBubble">
+      <view class="modal-title">重命名歌曲</view>
+      <input 
+        class="input-field"
+        placeholder="请输入歌曲名称"
+        value="{{newName}}"
+        bindinput="onNameInput"
+        maxlength="30"
+      />
+      <view class="modal-actions">
+        <button class="btn-secondary btn-small" bindtap="onCancelRename">取消</button>
+        <button class="btn-primary btn-small" bindtap="onConfirmRename">确定</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 播放提示 -->
+  <view class="playing-tip" wx:if="{{playing}}" animation="{{playingAnim}}">
+    <text>🎵 正在播放: {{currentMusic?.title}}</text>
+  </view>
+</view>

@@ -1,0 +1,220 @@
+<view class="container">
+  <!-- 加载状态 -->
+  <block wx:if="{{status === 'generating'}}">
+    <view class="generating-area">
+      <view class="loading-icon">
+        <text class="loading-spin">🎵</text>
+      </view>
+      <view class="loading-title">AI正在创作中...</view>
+      <view class="loading-subtitle">预计需要1-2分钟，请稍候</view>
+      
+      <view class="progress-container">
+        <view class="progress-bar">
+          <view class="progress-inner" style="width: {{progress}}%;"></view>
+        </view>
+        <text class="progress-text">{{progressText}}</text>
+      </view>
+      
+      <!-- ========== 独家壁垒：处理流水线状态 ========== -->
+      <view class="pipeline-status">
+        <view class="pipeline-title">🎛️ 独家壁垒处理中</view>
+        
+        <!-- 质检状态 -->
+        <view class="pipeline-item {{qualityStatus === 'passed' ? 'passed' : qualityStatus === 'checking' ? 'checking' : 'failed'}}">
+          <text class="pipeline-icon">{{qualityStatus === 'passed' ? '✅' : qualityStatus === 'checking' ? '🔍' : '⚠️'}}</text>
+          <text class="pipeline-text">AI音质质检</text>
+          <text class="pipeline-score" wx:if="{{qualityScore > 0}}">{{qualityScore}}分</text>
+        </view>
+        
+        <!-- 混音状态 -->
+        <view class="pipeline-item {{mixStatus === 'completed' ? 'passed' : mixStatus === 'processing' ? 'checking' : ''}}">
+          <text class="pipeline-icon">{{mixStatus === 'completed' ? '✅' : mixStatus === 'processing' ? '🎛️' : '⏳'}}</text>
+          <text class="pipeline-text">智能混音降噪</text>
+          <text class="pipeline-badge" wx:if="{{isEnhanced}}">已优化</text>
+        </view>
+        
+        <!-- 高潮检测状态 -->
+        <view class="pipeline-item {{hookStatus === 'completed' ? 'passed' : hookStatus === 'finding' ? 'checking' : ''}}">
+          <text class="pipeline-icon">{{hookStatus === 'completed' ? '✅' : hookStatus === 'finding' ? '🎯' : '⏳'}}</text>
+          <text class="pipeline-text">精准高潮截取</text>
+          <text class="pipeline-badge" wx:if="{{hasHook}}">15秒</text>
+        </view>
+      </view>
+      
+      <!-- 步骤指示器 -->
+      <view class="generating-steps">
+        <view class="step {{step >= 1 ? 'active' : ''}}">
+          <text class="step-icon">{{step >= 1 ? '✓' : '1'}}</text>
+          <text class="step-text">理解创作意图</text>
+        </view>
+        <view class="step-line {{step >= 1 ? 'active' : ''}}"></view>
+        <view class="step {{step >= 2 ? 'active' : ''}}">
+          <text class="step-icon">{{step >= 2 ? '✓' : '2'}}</text>
+          <text class="step-text">创作歌词</text>
+        </view>
+        <view class="step-line {{step >= 2 ? 'active' : ''}}"></view>
+        <view class="step {{step >= 3 ? 'active' : ''}}">
+          <text class="step-icon">{{step >= 3 ? '✓' : '3'}}</text>
+          <text class="step-text">谱曲编曲</text>
+        </view>
+        <view class="step-line {{step >= 3 ? 'active' : ''}}"></view>
+        <view class="step {{step >= 4 ? 'active' : ''}}">
+          <text class="step-icon">{{step >= 4 ? '✓' : '4'}}</text>
+          <text class="step-text">人声合成</text>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 生成完成 -->
+  <block wx:if="{{status === 'completed'}}">
+    <!-- ========== 独家壁垒：质量标识 ========== -->
+    <view class="quality-badge-bar">
+      <view class="quality-badge {{qualityStatus === 'passed' ? 'badge-pass' : 'badge-warn'}}" bindtap="onShowQualityReport">
+        <text class="badge-icon">🎧</text>
+        <text class="badge-text">质检{{qualityGrade}}</text>
+        <text class="badge-score">{{qualityScore}}分</text>
+      </view>
+      
+      <view class="quality-badge {{isEnhanced ? 'badge-pass' : ''}}" bindtap="onShowMixEffect">
+        <text class="badge-icon">🎛️</text>
+        <text class="badge-text">{{isEnhanced ? '已混音' : '未混音'}}</text>
+      </view>
+      
+      <view class="quality-badge {{hasHook ? 'badge-pass' : ''}}">
+        <text class="badge-icon">🎯</text>
+        <text class="badge-text">{{hasHook ? '高潮' : '无高潮'}}</text>
+      </view>
+    </view>
+
+    <!-- 歌曲信息卡片 -->
+    <view class="card result-card fade-in">
+      <view class="music-visual">
+        <view class="music-disc {{playing ? 'spinning' : ''}}">
+          <text class="disc-icon">🎵</text>
+        </view>
+        <view class="music-waves">
+          <view class="wave {{playing ? 'active' : ''}}"></view>
+          <view class="wave wave-2 {{playing ? 'active' : ''}}"></view>
+          <view class="wave wave-3 {{playing ? 'active' : ''}}"></view>
+        </view>
+      </view>
+      
+      <view class="music-title-large">{{music.title}}</view>
+      <view class="music-tags">
+        <text class="tag">{{music.style}}</text>
+        <text class="tag tag-blue">{{music.vocalGender}}</text>
+        <text class="tag tag-green" wx:if="{{isEnhanced}}">✨已优化</text>
+      </view>
+      
+      <!-- 播放控制 -->
+      <view class="play-control">
+        <view class="progress-section">
+          <text class="time-text">{{currentTime}}</text>
+          <view class="progress-bar" bindtap="onSeek">
+            <view class="progress-inner" style="width: {{playProgress}}%;"></view>
+            <view class="progress-dot" style="left: {{playProgress}}%;"></view>
+          </view>
+          <text class="time-text">{{duration}}</text>
+        </view>
+        
+        <view class="play-buttons">
+          <view class="play-btn prev-btn" bindtap="onPrev">⏮</view>
+          <view class="play-btn main-btn" bindtap="onPlayPause">
+            {{playing ? '⏸' : '▶️'}}
+          </view>
+          <view class="play-btn next-btn" bindtap="onNext">⏭</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ========== 独家壁垒：高潮片段卡片 ========== -->
+    <view class="card hook-card fade-in" wx:if="{{hasHook}}">
+      <view class="hook-header">
+        <text class="hook-title">🎯 精准高潮片段</text>
+        <text class="hook-duration">15秒 | 无前奏</text>
+      </view>
+      <view class="hook-info">
+        <text class="hook-desc">AI精准定位歌曲高潮段落，适配短视频节奏</text>
+      </view>
+      <view class="hook-actions">
+        <button class="btn-secondary btn-small" bindtap="onDownloadClip">下载高潮</button>
+        <button class="btn-primary btn-small" bindtap="onShareHook">分享推广</button>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="card action-card fade-in">
+      <view class="action-title">歌曲操作</view>
+      <view class="action-grid">
+        <view class="action-item" bindtap="onDownloadFull">
+          <view class="action-icon">⬇️</view>
+          <text class="action-text">完整版</text>
+          <text class="action-sub">{{music.duration || '~3:00'}}</text>
+        </view>
+        <view class="action-item" bindtap="onDownloadClip">
+          <view class="action-icon">✂️</view>
+          <text class="action-text">{{hasHook ? '高潮片段' : '生成中...'}}</text>
+          <text class="action-sub">15秒</text>
+        </view>
+        <view class="action-item" bindtap="onShare">
+          <view class="action-icon">📤</view>
+          <text class="action-text">分享</text>
+        </view>
+        <view class="action-item" bindtap="onDistribute">
+          <view class="action-icon">🌐</view>
+          <text class="action-text">分发上架</text>
+          <text class="action-sub">多平台</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ========== 独家壁垒：分发入口 ========== -->
+    <view class="card distribute-card fade-in">
+      <view class="distribute-header">
+        <text class="distribute-title">🚀 一键分发到8大平台</text>
+      </view>
+      <view class="platform-list">
+        <view class="platform-item">
+          <text>🎵</text><text class="platform-name">QQ音乐</text>
+        </view>
+        <view class="platform-item">
+          <text>☁️</text><text class="platform-name">网易云</text>
+        </view>
+        <view class="platform-item">
+          <text>💧</text><text class="platform-name">汽水音乐</text>
+        </view>
+        <view class="platform-item">
+          <text>🐕</text><text class="platform-name">酷狗</text>
+        </view>
+        <view class="platform-item">
+          <text>🎶</text><text class="platform-name">酷我</text>
+        </view>
+        <view class="platform-item">
+          <text>🎬</text><text class="platform-name">抖音</text>
+        </view>
+        <view class="platform-item">
+          <text>⚡</text><text class="platform-name">快手</text>
+        </view>
+        <view class="platform-item">
+          <text>📕</text><text class="platform-name">小红书</text>
+        </view>
+      </view>
+      <button class="btn-distribute" bindtap="onDistribute">立即分发</button>
+    </view>
+
+    <!-- 返回首页 -->
+    <view class="back-home" bindtap="onBackHome">
+      <text>← 返回首页继续创作</text>
+    </view>
+  </block>
+
+  <!-- 错误状态 -->
+  <block wx:if="{{status === 'error'}}">
+    <view class="error-area">
+      <text class="error-icon">😢</text>
+      <view class="error-text">{{errorMessage}}</view>
+      <button class="btn-primary" bindtap="onRetry">重新生成</button>
+    </view>
+  </block>
+</view>

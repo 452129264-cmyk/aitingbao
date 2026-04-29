@@ -1,0 +1,121 @@
+<view class="container">
+  <!-- 歌曲信息 -->
+  <view class="song-info-card">
+    <view class="song-cover">
+      <text>🎵</text>
+    </view>
+    <view class="song-details">
+      <text class="song-title">{{song.title || '未知歌曲'}}</text>
+      <view class="song-meta">
+        <text class="tag">{{song.style}}</text>
+        <text class="tag-blue">{{song.vocalGender}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 音乐平台 -->
+  <view class="platform-section">
+    <view class="section-header">
+      <text class="section-title">🎵 音乐平台</text>
+      <view class="select-all" bindtap="onSelectAll" data-type="music">
+        <text>全选</text>
+      </view>
+    </view>
+    
+    <view class="platform-grid">
+      <block wx:for="{{platforms.music}}" wx:key="id">
+        <view 
+          class="platform-item {{selectedPlatforms.includes(item.id) ? 'selected' : ''}}"
+          bindtap="onTogglePlatform"
+          data-id="{{item.id}}"
+        >
+          <view class="platform-icon">{{item.icon}}</view>
+          <text class="platform-name">{{item.name}}</text>
+          <view class="auth-badge {{authStatus[item.id]?.isAuthorized ? 'authorized' : 'unauthorized'}}">
+            {{authStatus[item.id]?.isAuthorized ? '已授权' : '未授权'}}
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 短视频平台 -->
+  <view class="platform-section">
+    <view class="section-header">
+      <text class="section-title">🎬 短视频平台</text>
+      <view class="select-all" bindtap="onSelectAll" data-type="shortVideo">
+        <text>全选</text>
+      </view>
+    </view>
+    
+    <view class="platform-grid">
+      <block wx:for="{{platforms.shortVideo}}" wx:key="id">
+        <view 
+          class="platform-item {{selectedPlatforms.includes(item.id) ? 'selected' : ''}}"
+          bindtap="onTogglePlatform"
+          data-id="{{item.id}}"
+        >
+          <view class="platform-icon">{{item.icon}}</view>
+          <text class="platform-name">{{item.name}}</text>
+          <view class="auth-badge {{item.authType === 'manual' ? 'manual' : (authStatus[item.id]?.isAuthorized ? 'authorized' : 'unauthorized')}}">
+            {{item.authType === 'manual' ? '素材包' : (authStatus[item.id]?.isAuthorized ? '已授权' : '未授权')}}
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 已选平台 -->
+  <view class="selected-section" wx:if="{{selectedPlatforms.length > 0}}">
+    <text class="selected-title">已选择 {{selectedPlatforms.length}} 个平台</text>
+  </view>
+
+  <!-- 分发按钮 -->
+  <view class="distribute-bar">
+    <button 
+      class="btn-distribute {{isDistributing ? 'distributing' : ''}}"
+      bindtap="onStartDistribute"
+      disabled="{{isDistributing || selectedPlatforms.length === 0}}"
+    >
+      <text wx:if="{{!isDistributing}}">🚀 一键分发</text>
+      <text wx:else>分发中... {{distributeProgress}}%</text>
+    </button>
+  </view>
+
+  <!-- 分发结果 -->
+  <view class="result-section" wx:if="{{distributeResults && distributeResults.length > 0}}">
+    <view class="section-header">
+      <text class="section-title">📋 分发结果</text>
+      <view class="view-history" bindtap="onViewHistory">
+        <text>查看全部</text>
+      </view>
+    </view>
+    
+    <view class="result-list">
+      <block wx:for="{{distributeResults}}" wx:key="platformId">
+        <view class="result-item {{item.success ? 'success' : 'failed'}}">
+          <view class="result-left">
+            <text class="result-icon">{{item.success ? '✅' : '❌'}}</text>
+            <view class="result-info">
+              <text class="result-platform">{{item.platformName}}</text>
+              <text class="result-status">{{item.status}}</text>
+            </view>
+          </view>
+          <view class="result-actions">
+            <text class="action-btn" bindtap="onViewStatus" data-id="{{item.platformId}}">查看</text>
+            <text class="action-btn" wx:if="{{item.packageUrl}}" bindtap="onCopyPackageLink" data-id="{{item.platformId}}">复制链接</text>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 提示信息 -->
+  <view class="tips-section">
+    <view class="tips-title">💡 温馨提示</view>
+    <view class="tips-item">• 请确保已入驻各平台音乐人</view>
+    <view class="tips-item">• 部分平台需要先完成授权</view>
+    <view class="tips-item">• 审核周期约1-7个工作日</view>
+    <view class="tips-item">• 建议标注"AI生成内容"</view>
+  </view>
+</view>

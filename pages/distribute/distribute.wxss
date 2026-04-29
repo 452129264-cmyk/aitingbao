@@ -1,0 +1,274 @@
+.container {
+  min-height: 100vh;
+  background: #1a1a2e;
+  padding: 30rpx;
+  padding-bottom: 150rpx;
+}
+
+/* 歌曲信息卡片 */
+.song-info-card {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #2a2a4a 0%, #1a1a2e 100%);
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+}
+
+.song-cover {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 16rpx;
+  background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  margin-right: 24rpx;
+}
+
+.song-details {
+  flex: 1;
+}
+
+.song-title {
+  font-size: 32rpx;
+  color: #fff;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 12rpx;
+}
+
+.song-meta {
+  display: flex;
+  gap: 12rpx;
+}
+
+.tag {
+  font-size: 22rpx;
+  padding: 6rpx 16rpx;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20rpx;
+  color: #999;
+}
+
+.tag-blue {
+  background: rgba(33, 150, 243, 0.2);
+  color: #2196F3;
+}
+
+/* 平台区块 */
+.platform-section {
+  margin-bottom: 30rpx;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 30rpx;
+  color: #fff;
+  font-weight: bold;
+}
+
+.select-all {
+  font-size: 24rpx;
+  color: #ff6b9d;
+  padding: 8rpx 20rpx;
+  border: 1rpx solid #ff6b9d;
+  border-radius: 20rpx;
+}
+
+/* 平台网格 */
+.platform-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20rpx;
+}
+
+.platform-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16rpx;
+  padding: 30rpx 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2rpx solid transparent;
+  transition: all 0.3s;
+}
+
+.platform-item.selected {
+  background: rgba(255, 107, 157, 0.15);
+  border-color: #ff6b9d;
+}
+
+.platform-icon {
+  font-size: 50rpx;
+  margin-bottom: 12rpx;
+}
+
+.platform-name {
+  font-size: 26rpx;
+  color: #fff;
+  margin-bottom: 12rpx;
+}
+
+.auth-badge {
+  font-size: 20rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 20rpx;
+}
+
+.auth-badge.authorized {
+  background: rgba(76, 175, 80, 0.2);
+  color: #4CAF50;
+}
+
+.auth-badge.unauthorized {
+  background: rgba(244, 67, 54, 0.2);
+  color: #F44336;
+}
+
+.auth-badge.manual {
+  background: rgba(255, 152, 0, 0.2);
+  color: #FF9800;
+}
+
+/* 已选提示 */
+.selected-section {
+  text-align: center;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.selected-title {
+  font-size: 26rpx;
+  color: #ff6b9d;
+}
+
+/* 分发按钮栏 */
+.distribute-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, #1a1a2e 80%, transparent);
+  padding: 30rpx;
+  padding-bottom: 50rpx;
+}
+
+.btn-distribute {
+  width: 100%;
+  height: 90rpx;
+  background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: bold;
+  border-radius: 45rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.btn-distribute.distributing {
+  background: linear-gradient(135deg, #666 0%, #444 100%);
+}
+
+/* 分发结果 */
+.result-section {
+  margin-top: 30rpx;
+}
+
+.view-history {
+  font-size: 24rpx;
+  color: #ff6b9d;
+}
+
+.result-list {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16rpx;
+  padding: 20rpx;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx;
+  border-radius: 12rpx;
+  margin-bottom: 16rpx;
+}
+
+.result-item:last-child {
+  margin-bottom: 0;
+}
+
+.result-item.success {
+  background: rgba(76, 175, 80, 0.1);
+}
+
+.result-item.failed {
+  background: rgba(244, 67, 54, 0.1);
+}
+
+.result-left {
+  display: flex;
+  align-items: center;
+}
+
+.result-icon {
+  font-size: 32rpx;
+  margin-right: 16rpx;
+}
+
+.result-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.result-platform {
+  font-size: 28rpx;
+  color: #fff;
+}
+
+.result-status {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.result-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.action-btn {
+  font-size: 24rpx;
+  color: #ff6b9d;
+  padding: 8rpx 16rpx;
+}
+
+/* 提示信息 */
+.tips-section {
+  margin-top: 30rpx;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16rpx;
+  padding: 30rpx;
+}
+
+.tips-title {
+  font-size: 28rpx;
+  color: #FF9800;
+  margin-bottom: 16rpx;
+}
+
+.tips-item {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 10rpx;
+  line-height: 1.6;
+}
