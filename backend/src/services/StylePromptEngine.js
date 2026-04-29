@@ -32,4 +32,4 @@ class StylePromptEngine {
   }
 }
 
-module.exports = new StylePromptEngine();
+module.exports = StylePromptEngine;
