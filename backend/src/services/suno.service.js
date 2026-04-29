@@ -5,8 +5,8 @@
 
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
-const config = require('../../config/suno.config');
-const logger = require('../../utils/logger');
+const config = require('../config/suno.config');
+const logger = require('../utils/logger');
 
 // 内存存储（生产环境应使用Redis）
 const taskStore = new Map();

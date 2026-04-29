@@ -8,8 +8,8 @@
 
 const express = require('express');
 const router = express.Router();
-const DistributorFactory = require('../distributors/DistributorFactory');
-const { DistributeStatus, PlatformType } = require('../distributors/BaseDistributor');
+const DistributorFactory = require('../../distributors/DistributorFactory');
+const { DistributeStatus, PlatformType } = require('../../distributors/BaseDistributor');
 const logger = require('../utils/logger');
 
 // 分发器工厂

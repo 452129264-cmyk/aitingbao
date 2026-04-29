@@ -11,7 +11,7 @@
  * - 古风：五声音阶(宫商角徵羽) + 清冷编曲 + 笛/古筝音色 + 文言化歌词
  */
 
-const logger = require('../../utils/logger');
+const logger = require('../utils/logger');
 
 class StylePromptEngine {
   constructor() {
