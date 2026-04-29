@@ -22,7 +22,7 @@ const qualityRouter = require('./routes/quality');
 const distributeRouter = require('./routes/distribute');
 const logger = require('./utils/logger');
 
-const app = express();
+const app = express(); app.set("trust proxy", 1);
 const PORT = process.env.PORT || 3000;
 
 // ============ 中间件 ============
